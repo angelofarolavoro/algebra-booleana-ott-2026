@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Algebra booleana: riassunto e flashcard</title>
+<meta name="description" content="Riassunto completo e flashcard interattive di algebra booleana: connettivi, porte logiche, tabelle di verità, teoremi, semplificazione e mappe di Karnaugh.">
+<meta name="theme-color" content="#1d4ed8">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Algebra booleana: riassunto e flashcard">
+<meta property="og:description" content="Riassunto e flashcard interattive su porte logiche, tabelle di verità, teoremi e mappe di Karnaugh.">
+<meta property="og:locale" content="it_IT">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d4ed8'/%3E%3Ctext x='32' y='43' font-size='34' text-anchor='middle' fill='white' font-family='Arial' font-weight='700'%3E%26amp;%3C/text%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#f6f7fb; --surface:#ffffff; --surface2:#eef1f8; --text:#16181d; --muted:#5b6475;
+  --border:#d9deea; --accent:#1d4ed8; --accent-text:#ffffff; --accent-soft:#e3ebff;
+  --good:#15803d; --good-soft:#dcfce7; --warn:#b45309; --warn-soft:#fef3c7;
+  --code-bg:#f1f4fb; --shadow:0 1px 2px rgba(16,24,40,.06),0 6px 20px rgba(16,24,40,.06);
+  --radius:14px;
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+}
+:root[data-theme="dark"]{
+  --bg:#0e1118; --surface:#171b25; --surface2:#1f2431; --text:#e8ebf2; --muted:#9aa4b8;
+  --border:#2b3243; --accent:#6c9bff; --accent-text:#0b1020; --accent-soft:#1d2a4d;
+  --good:#4ade80; --good-soft:#12301f; --warn:#fbbf24; --warn-soft:#3a2e0d;
+  --code-bg:#12161f; --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 20px rgba(0,0,0,.35);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e1118; --surface:#171b25; --surface2:#1f2431; --text:#e8ebf2; --muted:#9aa4b8;
+    --border:#2b3243; --accent:#6c9bff; --accent-text:#0b1020; --accent-soft:#1d2a4d;
+    --good:#4ade80; --good-soft:#12301f; --warn:#fbbf24; --warn-soft:#3a2e0d;
+    --code-bg:#12161f; --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 20px rgba(0,0,0,.35);
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.65;font-size:17px;-webkit-text-size-adjust:100%}
+a{color:var(--accent)}
+.skip{position:absolute;left:-999px;top:8px;background:var(--accent);color:var(--accent-text);padding:8px 14px;border-radius:8px;z-index:100}
+.skip:focus{left:8px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+
+/* Barra superiore */
+.topbar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--border)}
+.topbar-in{max-width:1120px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{font-weight:800;font-size:1.05rem;letter-spacing:-.01em;margin-right:auto;display:flex;align-items:center;gap:10px}
+.logo{width:30px;height:30px;border-radius:8px;background:var(--accent);color:var(--accent-text);display:grid;place-items:center;font-weight:800;font-size:1rem}
+.tabs{display:flex;gap:4px;background:var(--surface2);padding:4px;border-radius:12px}
+.tab{appearance:none;border:0;background:transparent;color:var(--muted);font:inherit;font-weight:600;font-size:.95rem;padding:8px 16px;border-radius:9px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--surface);color:var(--text);box-shadow:var(--shadow)}
+.icon-btn{appearance:none;border:1px solid var(--border);background:var(--surface);color:var(--text);width:40px;height:40px;border-radius:10px;cursor:pointer;font-size:1.05rem}
+.icon-btn:hover{background:var(--surface2)}
+
+main{max-width:1120px;margin:0 auto;padding:24px 16px 80px}
+.hero{padding:8px 0 22px}
+.hero h1{margin:0 0 6px;font-size:clamp(1.7rem,4.6vw,2.5rem);letter-spacing:-.02em;line-height:1.15}
+.hero p{margin:0;color:var(--muted);max-width:60ch}
+[hidden]{display:none!important}
+
+/* Riassunto */
+.layout{display:grid;grid-template-columns:240px minmax(0,1fr);gap:28px;align-items:start}
+.toc{position:sticky;top:84px;max-height:calc(100vh - 110px);overflow:auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 10px;font-size:.92rem}
+.toc h2{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 8px 8px}
+.toc ol{list-style:none;margin:0;padding:0}
+.toc a{display:block;padding:6px 10px;border-radius:8px;color:var(--text);text-decoration:none;line-height:1.35}
+.toc a:hover{background:var(--surface2)}
+.toc a.active{background:var(--accent-soft);color:var(--accent);font-weight:700}
+.toc-mobile{display:none}
+.doc{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:clamp(18px,3.5vw,38px);box-shadow:var(--shadow);min-width:0}
+.doc h1{display:none}
+.doc h2{font-size:1.45rem;margin:2.2em 0 .6em;padding-top:.2em;letter-spacing:-.01em;line-height:1.25}
+.doc h2:first-of-type{margin-top:.2em}
+.doc h3,.doc strong{letter-spacing:0}
+.doc p{margin:.7em 0}
+.doc ul,.doc ol{padding-left:1.4em;margin:.6em 0}
+.doc li{margin:.3em 0}
+.doc code{font-family:var(--mono);background:var(--code-bg);padding:.1em .35em;border-radius:6px;font-size:.92em}
+.doc pre{background:var(--code-bg);border:1px solid var(--border);border-radius:12px;padding:14px 16px;overflow:auto;line-height:1.5;margin:1em 0}
+.doc pre code{background:none;padding:0;font-size:.92rem}
+.table-wrap{overflow-x:auto;margin:1em 0;border:1px solid var(--border);border-radius:12px}
+.doc table{border-collapse:collapse;width:100%;min-width:480px;font-size:.96rem}
+.doc th,.doc td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+.doc th{background:var(--surface2);font-weight:700}
+.doc tr:last-child td{border-bottom:0}
+.doc blockquote{margin:1em 0;padding:.2em 1em;border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:0 10px 10px 0}
+
+/* Flashcard */
+.fc-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px}
+.fc-controls select,.btn{font:inherit;font-size:.95rem;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:10px;padding:9px 14px;cursor:pointer}
+.btn:hover,.fc-controls select:hover{background:var(--surface2)}
+.btn.primary{background:var(--accent);color:var(--accent-text);border-color:transparent;font-weight:700}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.good{background:var(--good-soft);color:var(--good);border-color:transparent;font-weight:700}
+.btn.warn{background:var(--warn-soft);color:var(--warn);border-color:transparent;font-weight:700}
+.btn[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+.fc-controls .grow{flex:1 1 220px;min-width:180px}
+.progress{height:8px;background:var(--surface2);border-radius:99px;overflow:hidden}
+.progress>i{display:block;height:100%;width:0;background:var(--good);transition:width .25s}
+.fc-meta{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:.9rem;margin:8px 2px 14px;flex-wrap:wrap}
+.stage{perspective:1400px;max-width:760px;margin:0 auto}
+.card{position:relative;width:100%;min-height:320px;cursor:pointer;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.7,.2,1);border:0;background:none;padding:0;font:inherit;color:inherit;text-align:left;display:block}
+.card.flipped{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--surface);border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow);padding:clamp(20px,4vw,36px);display:flex;flex-direction:column;overflow:auto}
+.face.back{transform:rotateY(180deg);background:var(--accent-soft);border-color:var(--accent)}
+.tag{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700;margin-bottom:10px}
+.face.back .tag{color:var(--accent)}
+.face .body{margin:auto 0;font-size:clamp(1.1rem,2.6vw,1.4rem);line-height:1.5}
+.face .body code{font-family:var(--mono);background:var(--code-bg);padding:.05em .3em;border-radius:6px}
+.hint{margin-top:12px;font-size:.82rem;color:var(--muted)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:18px 0 6px}
+.kbd{font-family:var(--mono);font-size:.78rem;border:1px solid var(--border);border-bottom-width:2px;border-radius:6px;padding:1px 6px;background:var(--surface)}
+.empty{text-align:center;color:var(--muted);padding:40px 10px}
+.stage.no-anim .card{transition:none}
+
+footer{max-width:1120px;margin:0 auto;padding:0 16px 40px;color:var(--muted);font-size:.88rem}
+
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr}
+  .toc{display:none}
+  .toc-mobile{display:block;margin-bottom:14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:4px 14px}
+  .toc-mobile summary{cursor:pointer;font-weight:700;padding:10px 0}
+  .toc-mobile ol{list-style:none;margin:0 0 8px;padding:0}
+  .toc-mobile a{display:block;padding:8px 4px;text-decoration:none;color:var(--text)}
+  body{font-size:16.5px}
+  .card{min-height:360px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .card{transition:none}
+}
+@media print{
+  .topbar,.toc,.toc-mobile,.fc-controls,.actions,.skip,.tabs,.icon-btn,#panel-flash{display:none!important}
+  #panel-sum{display:block!important}
+  body{background:#fff;color:#000;font-size:12pt}
+  .layout{display:block}
+  .doc{border:0;box-shadow:none;padding:0}
+  .doc h2{break-after:avoid}
+  .doc pre,.table-wrap{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#contenuto">Vai al contenuto</a>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <div class="brand"><span class="logo" aria-hidden="true">&amp;</span><span>Algebra booleana</span></div>
+    <div class="tabs" role="tablist" aria-label="Sezioni">
+      <button class="tab" role="tab" id="tab-sum" aria-controls="panel-sum" aria-selected="true">Riassunto</button>
+      <button class="tab" role="tab" id="tab-flash" aria-controls="panel-flash" aria-selected="false">Flashcard</button>
+    </div>
+    <button class="icon-btn" id="theme" type="button" aria-label="Cambia tema chiaro o scuro" title="Cambia tema">◐</button>
+  </div>
+</header>
+
+<main id="contenuto">
+  <section class="hero">
+    <h1>Algebra booleana</h1>
+    <p>Riassunto e flashcard per studiare logica, porte logiche, tabelle di verità, teoremi, semplificazione e mappe di Karnaugh. Materiale basato sulle slide del Prof. Patanè Roberto.</p>
+  </section>
+
+  <section id="panel-sum" role="tabpanel" aria-labelledby="tab-sum">
+    <details class="toc-mobile"><summary>Indice degli argomenti</summary><ol><li><a href="#1-logica-e-proposizioni">1. Logica e proposizioni</a></li><li><a href="#2-i-connettivi-logici">2. I connettivi logici</a></li><li><a href="#3-tabelle-di-verita">3. Tabelle di verità</a></li><li><a href="#4-connettivi-e-insiemi">4. Connettivi e insiemi</a></li><li><a href="#5-lalgebra-booleana">5. L&#x27;algebra booleana</a></li><li><a href="#6-le-porte-logiche">6. Le porte logiche</a></li><li><a href="#7-la-porta-not-e-le-porte-negate">7. La porta NOT e le porte negate</a></li><li><a href="#8-funzioni-logiche-e-circuiti">8. Funzioni logiche e circuiti</a></li><li><a href="#9-reti-logiche-e-circuiti-integrati">9. Reti logiche e circuiti integrati</a></li><li><a href="#10-come-si-costruisce-una-tabella-di-verita">10. Come si costruisce una tabella di verità</a></li><li><a href="#11-calcolare-luscita-di-un-circuito">11. Calcolare l&#x27;uscita di un circuito</a></li><li><a href="#12-proprieta-e-teoremi">12. Proprietà e teoremi</a></li><li><a href="#13-semplificare-una-funzione-esempi-svolti">13. Semplificare una funzione (esempi svolti)</a></li><li><a href="#14-mappe-di-karnaugh">14. Mappe di Karnaugh</a></li><li><a href="#15-esercizi-con-soluzione-dalle-slide">15. Esercizi con soluzione (dalle slide)</a></li><li><a href="#16-errori-comuni-da-evitare">16. Errori comuni da evitare</a></li></ol></details>
+    <div class="layout">
+      <nav class="toc" aria-label="Indice degli argomenti"><h2>Indice</h2><ol><li><a href="#1-logica-e-proposizioni">1. Logica e proposizioni</a></li><li><a href="#2-i-connettivi-logici">2. I connettivi logici</a></li><li><a href="#3-tabelle-di-verita">3. Tabelle di verità</a></li><li><a href="#4-connettivi-e-insiemi">4. Connettivi e insiemi</a></li><li><a href="#5-lalgebra-booleana">5. L&#x27;algebra booleana</a></li><li><a href="#6-le-porte-logiche">6. Le porte logiche</a></li><li><a href="#7-la-porta-not-e-le-porte-negate">7. La porta NOT e le porte negate</a></li><li><a href="#8-funzioni-logiche-e-circuiti">8. Funzioni logiche e circuiti</a></li><li><a href="#9-reti-logiche-e-circuiti-integrati">9. Reti logiche e circuiti integrati</a></li><li><a href="#10-come-si-costruisce-una-tabella-di-verita">10. Come si costruisce una tabella di verità</a></li><li><a href="#11-calcolare-luscita-di-un-circuito">11. Calcolare l&#x27;uscita di un circuito</a></li><li><a href="#12-proprieta-e-teoremi">12. Proprietà e teoremi</a></li><li><a href="#13-semplificare-una-funzione-esempi-svolti">13. Semplificare una funzione (esempi svolti)</a></li><li><a href="#14-mappe-di-karnaugh">14. Mappe di Karnaugh</a></li><li><a href="#15-esercizi-con-soluzione-dalle-slide">15. Esercizi con soluzione (dalle slide)</a></li><li><a href="#16-errori-comuni-da-evitare">16. Errori comuni da evitare</a></li></ol></nav>
+      <article class="doc">
+<h2 id="1-logica-e-proposizioni">1. Logica e proposizioni</h2>
+<ul>
+<li>La <strong>logica</strong> studia il ragionamento: da alcune premesse si arriva a determinate conclusioni.</li>
+<li>Una <strong>proposizione (enunciato)</strong> è una frase di senso compiuto, con almeno soggetto e predicato, che può essere solo <strong>Vera o Falsa</strong> (V|F, oppure 1|0).</li>
+<li><strong>Enunciati semplici (atomici)</strong>: si può dire subito se sono veri o falsi.</li>
+<li><strong>Enunciati composti (molecolari)</strong>: più enunciati legati da <strong>connettivi logici</strong>.</li>
+</ul>
+<p>Esempi:</p>
+<ul>
+<li>Sono enunciati: "4 è un numero pari" (V), "Londra è la capitale della Germania" (F).</li>
+<li>NON sono enunciati: "Prendi il libro!", "Che ore sono?" (non sono né veri né falsi).</li>
+</ul>
+<h2 id="2-i-connettivi-logici">2. I connettivi logici</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Connettivo</th>
+<th style="text-align: center;">Simbolo</th>
+<th style="text-align: left;">Significato</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Congiunzione E (AND)</td>
+<td style="text-align: center;">p ∧ q</td>
+<td style="text-align: left;">Vera solo se p e q sono entrambe vere</td>
+</tr>
+<tr>
+<td style="text-align: left;">Disgiunzione inclusiva O (OR)</td>
+<td style="text-align: center;">p ∨ q</td>
+<td style="text-align: left;">Vera se almeno una è vera (include il caso "entrambe", latino <em>vel</em>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Disgiunzione esclusiva O (XOR)</td>
+<td style="text-align: center;">p ⊻ q</td>
+<td style="text-align: left;">Vera se una sola è vera (esclude il caso "entrambe", latino <em>aut</em>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Negazione NON (NOT)</td>
+<td style="text-align: center;">¬p</td>
+<td style="text-align: left;">Inverte il valore. È <strong>unario</strong>: opera su una sola proposizione</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="3-tabelle-di-verita">3. Tabelle di verità</h2>
+<p>La tabella di verità dice il valore di una proposizione composta per ogni combinazione dei valori delle proposizioni semplici.</p>
+<pre><code> p q | AND   OR   XOR        p | NOT
+ F F |  F     F    F         F |  V
+ F V |  F     V    V         V |  F
+ V F |  F     V    V
+ V V |  V     V    F
+</code></pre>
+<h2 id="4-connettivi-e-insiemi">4. Connettivi e insiemi</h2>
+<ul>
+<li><strong>Intersezione ∩</strong>: elementi che appartengono al primo <strong>e</strong> al secondo insieme.</li>
+<li><strong>Unione ∪</strong>: elementi che appartengono al primo <strong>o</strong> al secondo insieme.</li>
+<li>Corrispondenza: ∧ corrisponde a ∩ e ∨ corrisponde a ∪ (i simboli stessi ce lo ricordano).</li>
+</ul>
+<h2 id="5-lalgebra-booleana">5. L'algebra booleana</h2>
+<p>Creata nell'Ottocento dal matematico <strong>George Boole</strong>: una logica matematica con variabili, operatori e funzioni.</p>
+<ul>
+<li><strong>Variabili booleane</strong>: equivalgono alle proposizioni semplici, valori solo <strong>1 (V)</strong> e <strong>0 (F)</strong>.</li>
+<li><strong>Operatori logici</strong>: equivalgono ai connettivi.<ul>
+<li>prodotto <strong>AND</strong> (·), corrisponde alla congiunzione E</li>
+<li>somma <strong>OR</strong> (+), corrisponde alla disgiunzione inclusiva</li>
+<li><strong>XOR</strong> o EXOR (⊕), corrisponde alla disgiunzione esclusiva</li>
+<li>negazione <strong>NOT</strong> (Ā), corrisponde a NON</li>
+</ul>
+</li>
+<li><strong>Funzioni logiche</strong>: equivalgono alle proposizioni composte.</li>
+</ul>
+<p><strong>Regole di precedenza</strong></p>
+<ol>
+<li>NOT ha precedenza su AND e OR</li>
+<li>AND ha precedenza su OR e XOR</li>
+<li>Le parentesi forzano l'ordine</li>
+</ol>
+<h2 id="6-le-porte-logiche">6. Le porte logiche</h2>
+<p>Una porta logica realizza fisicamente un operatore. Tabelle in 0 e 1:</p>
+<pre><code> A B | AND  OR  XOR  | NAND  NOR  XNOR
+ 0 0 |  0    0    0   |   1    1     1
+ 0 1 |  0    1    1   |   1    0     0
+ 1 0 |  0    1    1   |   1    0     0
+ 1 1 |  1    1    0   |   0    0     1
+</code></pre>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Porta</th>
+<th style="text-align: left;">Forma algebrica</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">AND (prodotto logico)</td>
+<td style="text-align: left;">A · B</td>
+</tr>
+<tr>
+<td style="text-align: left;">OR (somma logica)</td>
+<td style="text-align: left;">A + B</td>
+</tr>
+<tr>
+<td style="text-align: left;">XOR (somma logica)</td>
+<td style="text-align: left;">A ⊕ B</td>
+</tr>
+<tr>
+<td style="text-align: left;">NOT</td>
+<td style="text-align: left;">Ā</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="7-la-porta-not-e-le-porte-negate">7. La porta NOT e le porte negate</h2>
+<ul>
+<li>NOT: se A = 0 dà 1, se A = 1 dà 0.</li>
+<li><strong>Due NOT in serie</strong> restituiscono il valore di partenza: due negazioni affermano.</li>
+<li>Un NOT messo subito dopo un'altra porta dà una <strong>porta negata</strong>. Graficamente il NOT si sostituisce con il solo <strong>pallino vuoto</strong>.<ul>
+<li>AND seguita da NOT = <strong>NAND</strong></li>
+<li>OR seguita da NOT = <strong>NOR</strong></li>
+<li>XOR seguita da NOT = <strong>XNOR</strong></li>
+</ul>
+</li>
+<li>Trucco per ricordare: le uscite di NAND, NOR, XNOR sono esattamente l'opposto di AND, OR, XOR.</li>
+<li>Un pallino vuoto su un ingresso equivale a un NOT su quell'ingresso.</li>
+</ul>
+<h2 id="8-funzioni-logiche-e-circuiti">8. Funzioni logiche e circuiti</h2>
+<p>Una <strong>funzione logica booleana</strong> accetta uno o più input binari e restituisce un output binario. Si può rappresentare in tre modi equivalenti:</p>
+<ol>
+<li><strong>equazione logica</strong></li>
+<li><strong>tabella di verità</strong></li>
+<li><strong>circuito logico</strong></li>
+</ol>
+<p>Esempio dalle slide: <strong>F = X + Ȳ·Z</strong></p>
+<pre><code> X Y Z | F
+ 0 0 0 | 0
+ 0 0 1 | 1
+ 0 1 0 | 0
+ 0 1 1 | 0
+ 1 0 0 | 1
+ 1 0 1 | 1
+ 1 1 0 | 1
+ 1 1 1 | 1
+</code></pre>
+<p><strong>Forma letterale e forma algebrica</strong></p>
+<ul>
+<li>Letterale: usa le parole (AND, OR, NOT). Algebrica: usa i simboli.</li>
+<li>Esempio: F = (A AND B) OR NOT C equivale a F = A · B + C̄.</li>
+</ul>
+<h2 id="9-reti-logiche-e-circuiti-integrati">9. Reti logiche e circuiti integrati</h2>
+<ul>
+<li>Una <strong>rete logica</strong> è un circuito fatto di porte collegate, che realizza fisicamente una funzione booleana.</li>
+<li>Se la rete si chiude in una "scatola" lasciando fuori ingressi e uscite si ottiene un <strong>chip</strong>.</li>
+<li>Un <strong>circuito integrato</strong> è un circuito elettronico miniaturizzato con milioni di <strong>transistor</strong>.</li>
+<li>Lo schema dei collegamenti dei piedini è il <strong>pinout</strong>. Esempio visto a lezione: il chip <strong>7408</strong> (contiene porte AND), con alimentazione Vcc e massa GND.</li>
+</ul>
+<h2 id="10-come-si-costruisce-una-tabella-di-verita">10. Come si costruisce una tabella di verità</h2>
+<ol>
+<li>Conta le variabili n: le righe sono <strong>2 elevato a n</strong> (3 variabili = 8 righe).</li>
+<li>Elenca le combinazioni in ordine binario da 000 a 111.</li>
+<li>Aggiungi una colonna per ogni passaggio intermedio (NOT, parentesi, AND, ecc.), rispettando le precedenze.</li>
+<li>L'ultima colonna è l'uscita F.</li>
+</ol>
+<p><strong>Esempio svolto: F = A AND B OR C</strong> (AND prima di OR)</p>
+<pre><code> A B C | A AND B | F
+ 0 0 0 |    0    | 0
+ 0 0 1 |    0    | 1
+ 0 1 0 |    0    | 0
+ 0 1 1 |    0    | 1
+ 1 0 0 |    0    | 0
+ 1 0 1 |    0    | 1
+ 1 1 0 |    1    | 1
+ 1 1 1 |    1    | 1
+</code></pre>
+<p><strong>Esempio svolto: F = NOT(A OR B) AND C.</strong> F vale 1 solo per A=0, B=0, C=1 (in tutte le altre righe vale 0).</p>
+<p><strong>Esempio svolto: F = A AND NOT(B) XOR C.</strong> Calcola prima NOT B, poi A AND (NOT B), infine XOR con C. Risultato per le 8 righe (da 000 a 111): 0, 1, 0, 1, 1, 0, 0, 1.</p>
+<h2 id="11-calcolare-luscita-di-un-circuito">11. Calcolare l'uscita di un circuito</h2>
+<p>Si sostituiscono i valori in ingresso e si procede porta dopo porta, da sinistra a destra.</p>
+<ul>
+<li>Circuito 1: m = (1 AND 0) OR (1 AND 1) = 0 OR 1 = <strong>1</strong></li>
+<li>Circuito 2: m = (1 OR 0) XOR (NOT(0) AND 1) = 1 XOR 1 = <strong>0</strong></li>
+<li>Circuito 3: m = NOT((0 OR 1) AND (1 XOR 0)) = NOT(1 AND 1) = <strong>0</strong>. Si può scrivere anche come (0 OR 1) NAND (1 XOR 0).</li>
+</ul>
+<h2 id="12-proprieta-e-teoremi">12. Proprietà e teoremi</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Nome</th>
+<th style="text-align: left;">Forma</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Commutativa</td>
+<td style="text-align: left;">A + B = B + A  e  A · B = B · A</td>
+</tr>
+<tr>
+<td style="text-align: left;">Associativa</td>
+<td style="text-align: left;">(A + B) + C = A + (B + C)  e  (A · B) · C = A · (B · C)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Distributiva</td>
+<td style="text-align: left;">A · B + A · C = A · (B + C)  e  (A + B) · (A + C) = A + (B · C)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Annullamento</td>
+<td style="text-align: left;">A · 0 = 0  e  A + 1 = 1</td>
+</tr>
+<tr>
+<td style="text-align: left;">Identità</td>
+<td style="text-align: left;">A · 1 = A  e  A + 0 = A</td>
+</tr>
+<tr>
+<td style="text-align: left;">Complementi</td>
+<td style="text-align: left;">A · Ā = 0  e  A + Ā = 1</td>
+</tr>
+<tr>
+<td style="text-align: left;">Idempotenza</td>
+<td style="text-align: left;">A · A = A  e  A + A = A</td>
+</tr>
+<tr>
+<td style="text-align: left;">1° Assorbimento</td>
+<td style="text-align: left;">A · (A + B) = A  e  A + (A · B) = A</td>
+</tr>
+<tr>
+<td style="text-align: left;">2° Assorbimento</td>
+<td style="text-align: left;">A · (Ā + B) = A · B  e  A + (Ā · B) = A + B</td>
+</tr>
+<tr>
+<td style="text-align: left;">De Morgan</td>
+<td style="text-align: left;">NOT(A · B) = Ā + B̄  e  NOT(A + B) = Ā · B̄</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>De Morgan in parole</strong>: negare un AND equivale a un OR dei negati, negare un OR equivale a un AND dei negati.</p>
+<p><strong>Principio di dualità</strong>: data un'uguaglianza, se ne ottiene un'altra scambiando AND con OR e 1 con 0 (e viceversa).</p>
+<h2 id="13-semplificare-una-funzione-esempi-svolti">13. Semplificare una funzione (esempi svolti)</h2>
+<p><strong>Esempio 1</strong></p>
+<p>F = Ā·B̄·C + Ā·B·C + A·B̄·C + A·B·C</p>
+<ul>
+<li>Raccolgo: F = Ā·C·(B̄ + B) + A·C·(B̄ + B)</li>
+<li>Complementi (B̄ + B = 1): F = Ā·C + A·C</li>
+<li>Raccolgo C: F = C·(Ā + A) = C·1</li>
+<li>Risultato: <strong>F = C</strong></li>
+</ul>
+<p><strong>Esempio 2</strong></p>
+<p>F = Ā·B·C̄ + A·B̄·C̄ + A·B·C̄</p>
+<ul>
+<li>Raccolgo C̄: F = C̄·(Ā·B + A·B̄ + A·B)</li>
+<li>Raccolgo A negli ultimi due: F = C̄·(Ā·B + A·(B̄ + B)) = C̄·(Ā·B + A)</li>
+<li>Secondo assorbimento (A + Ā·B = A + B)</li>
+<li>Risultato: <strong>F = C̄·(A + B)</strong></li>
+</ul>
+<p><strong>Esempio 3 (con idempotenza)</strong></p>
+<p>Stessa funzione dell'esempio 2, ma si <strong>duplica un termine</strong> (A·B·C̄ + A·B·C̄ = A·B·C̄ per idempotenza) per poter raccogliere in due modi diversi.</p>
+<ul>
+<li>F = B·C̄·(Ā + A) + A·C̄·(B̄ + B) = B·C̄ + A·C̄</li>
+<li>Risultato: <strong>F = C̄·(A + B)</strong></li>
+</ul>
+<p>Idea chiave: l'idempotenza permette di riusare lo stesso termine più volte.</p>
+<h2 id="14-mappe-di-karnaugh">14. Mappe di Karnaugh</h2>
+<p>Strumento grafico per semplificare le espressioni booleane in modo visivo.</p>
+<p><strong>Regole</strong></p>
+<ol>
+<li>La mappa è una tabella: ogni cella è una combinazione degli ingressi.</li>
+<li>Le righe e colonne seguono l'ordine <strong>00, 01, 11, 10</strong> (codice Gray): due celle adiacenti differiscono per <strong>una sola variabile</strong>.</li>
+<li>Si segnano gli 1 nelle celle dei termini della funzione.</li>
+<li>Si raggruppano gli 1 in gruppi di <strong>potenze di 2</strong> (1, 2, 4, 8) il più grandi possibile.</li>
+<li>I gruppi <strong>possono sovrapporsi</strong>.</li>
+<li>I bordi della mappa sono <strong>adiacenti ai bordi opposti</strong> (la mappa si "avvolge").</li>
+<li>Per ogni gruppo si tengono solo le variabili che <strong>non cambiano</strong> all'interno del gruppo, poi si sommano i gruppi con OR.</li>
+</ol>
+<p><strong>Esempio 1</strong></p>
+<p>Y = Ā·B̄·C̄ + Ā·B·C̄ + A·B̄·C̄ + A·B̄·C + A·B·C̄ + A·B·C</p>
+<p>Termini: 000, 010, 100, 101, 110, 111</p>
+<ul>
+<li>Gruppo da 4 sulla riga C = 0 (con avvolgimento): dà <strong>C̄</strong></li>
+<li>Gruppo da 4 sulle colonne con A = 1: dà <strong>A</strong></li>
+<li>Risultato: <strong>Y = A + C̄</strong></li>
+</ul>
+<p><strong>Esempio 2</strong></p>
+<p>Y = A·B·C̄ + B·C + Ā·B̄·C</p>
+<p>Si espande B·C = B·C·(A + Ā) per ottenere solo termini completi: 110, 111, 011, 001</p>
+<ul>
+<li>Gruppo verticale A=1, B=1 (celle 110 e 111): <strong>AB</strong></li>
+<li>Gruppo orizzontale con C=1, A=0 (celle 001 e 011): <strong>ĀC</strong></li>
+<li>Risultato: <strong>Y = AB + ĀC</strong></li>
+</ul>
+<h2 id="15-esercizi-con-soluzione-dalle-slide">15. Esercizi con soluzione (dalle slide)</h2>
+<p>Prova a semplificare e poi controlla.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Funzione</th>
+<th style="text-align: left;">Soluzione</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Ā·B̄·C̄ + A·B̄·C̄ + Ā·B·C̄ + A·B·C̄</td>
+<td style="text-align: left;">Y = C̄</td>
+</tr>
+<tr>
+<td style="text-align: left;">A·B̄·C + Ā·C̄·D + A·C̄</td>
+<td style="text-align: left;">Y = A·B̄ + A·C̄ + C̄·D</td>
+</tr>
+<tr>
+<td style="text-align: left;">Ā·(A + B) + C̄ + B·C</td>
+<td style="text-align: left;">Y = B + C̄</td>
+</tr>
+<tr>
+<td style="text-align: left;">B̄·C̄ + A·B·C̄</td>
+<td style="text-align: left;">Y = B̄·C̄ + A·C̄</td>
+</tr>
+<tr>
+<td style="text-align: left;">NOT( Ā + A·B·C )</td>
+<td style="text-align: left;">Y = A·(B̄ + C̄)</td>
+</tr>
+<tr>
+<td style="text-align: left;">NOT( A + A·B̄ + C·D )</td>
+<td style="text-align: left;">Y = Ā·(C̄ + D̄)</td>
+</tr>
+<tr>
+<td style="text-align: left;">NOT( NOT(A + B) · C )</td>
+<td style="text-align: left;">Y = A + B + C̄</td>
+</tr>
+<tr>
+<td style="text-align: left;">(A + B)·(A + B̄)</td>
+<td style="text-align: left;">Y = A</td>
+</tr>
+<tr>
+<td style="text-align: left;">Funzione con termini 000, 010, 100, 101, 110, 111 (come nell'esempio 1 di Karnaugh)</td>
+<td style="text-align: left;">Y = A + C̄</td>
+</tr>
+<tr>
+<td style="text-align: left;">A·B·C̄ + B·C + Ā·B̄·C</td>
+<td style="text-align: left;">Y = A·B + Ā·C</td>
+</tr>
+<tr>
+<td style="text-align: left;">Circuito a 3 ingressi (ultima slide degli esercizi), da semplificare</td>
+<td style="text-align: left;">Y = Ā + B</td>
+</tr>
+</tbody>
+</table></div>
+<p>Nota: un esercizio delle slide (con doppie negazioni su barre lunghe, soluzione Y = A·B·C̄ + A·B·D) è poco leggibile nel testo estratto: consulta la slide originale prima di darlo allo studente.</p>
+<h2 id="16-errori-comuni-da-evitare">16. Errori comuni da evitare</h2>
+<ul>
+<li>Dimenticare che <strong>AND ha precedenza su OR</strong> (A + B·C significa A + (B·C)).</li>
+<li>Confondere OR e XOR: nella riga 1,1 l'OR dà 1, lo XOR dà 0.</li>
+<li>Negare male con De Morgan: NOT(A·B) NON è Ā·B̄, ma Ā + B̄.</li>
+<li>Dimenticare che una tabella con n variabili ha 2 elevato a n righe.</li>
+<li>Nelle mappe di Karnaugh: usare l'ordine 00, 01, 10, 11 invece di 00, 01, 11, 10.</li>
+</ul>
+      </article>
+    </div>
+  </section>
+
+  <section id="panel-flash" role="tabpanel" aria-labelledby="tab-flash" hidden>
+    <div class="fc-controls">
+      <label class="visually" for="sec" style="position:absolute;left:-999px">Argomento</label>
+      <select id="sec" aria-label="Filtra per argomento"></select>
+      <button class="btn" id="shuffle" type="button" aria-pressed="false">Mescola</button>
+      <button class="btn" id="onlyreview" type="button" aria-pressed="false">Solo da ripassare</button>
+      <button class="btn" id="reset" type="button">Azzera progressi</button>
+    </div>
+    <div class="progress" role="progressbar" aria-label="Carte sapute" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="bar"><i id="barfill"></i></div>
+    <div class="fc-meta"><span id="pos" aria-live="polite"></span><span id="known"></span></div>
+    <div class="stage" id="stage">
+      <div class="card" id="card" role="button" tabindex="0" aria-label="Carta, premi per girarla">
+        <div class="face front"><div class="tag" id="ftag"></div><div class="body" id="q"></div><div class="hint">Clicca la carta o premi Spazio per vedere la risposta</div></div>
+        <div class="face back" aria-hidden="true"><div class="tag">Risposta</div><div class="body" id="a"></div></div>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn" id="prev" type="button">← Precedente</button>
+      <button class="btn warn" id="again" type="button">Da ripassare</button>
+      <button class="btn good" id="got" type="button">La so</button>
+      <button class="btn primary" id="next" type="button">Successiva →</button>
+    </div>
+    <p class="fc-meta" style="justify-content:center">Scorciatoie: <span class="kbd">Spazio</span> gira, <span class="kbd">←</span> <span class="kbd">→</span> naviga, <span class="kbd">S</span> la so, <span class="kbd">R</span> da ripassare</p>
+    <p class="empty" id="empty" hidden>Nessuna carta da mostrare con questo filtro.</p>
+  </section>
+</main>
+
+<footer>
+  <p>Pagina statica, nessun dato lasciato il tuo dispositivo. I progressi delle flashcard sono salvati solo in questo browser.</p>
+</footer>
+
+<script type="application/json" id="deck">[{"id": 1, "sec": "Logica e connettivi", "q": "Che cos'è una proposizione (enunciato) in logica?", "a": "Una frase di senso compiuto, con almeno soggetto e predicato, che può essere solo Vera o Falsa (V|F, 1|0)."}, {"id": 2, "sec": "Logica e connettivi", "q": "\"Che ore sono?\" è una proposizione? Perché?", "a": "No. Non può essere né vera né falsa. Lo stesso vale per \"Prendi il libro!\"."}, {"id": 3, "sec": "Logica e connettivi", "q": "Differenza tra enunciato semplice (atomico) e composto (molecolare)?", "a": "Il semplice si può dire subito vero o falso. Il composto è formato da enunciati legati da connettivi logici."}, {"id": 4, "sec": "Logica e connettivi", "q": "Quando è vera una congiunzione p ∧ q (AND)?", "a": "Solo quando p e q sono entrambe vere."}, {"id": 5, "sec": "Logica e connettivi", "q": "Qual è la differenza tra OR (inclusivo) e XOR (esclusivo)?", "a": "Sono diversi solo nel caso in cui entrambe sono vere: l'OR dà 1 (include il caso, latino <em>vel<\/em>), lo XOR dà 0 (lo esclude, latino <em>aut<\/em>)."}, {"id": 6, "sec": "Logica e connettivi", "q": "Perché la negazione è detta connettivo unario?", "a": "Perché opera su una sola proposizione (¬p)."}, {"id": 7, "sec": "Logica e connettivi", "q": "Che corrispondenza c'è tra connettivi logici e operazioni sugli insiemi?", "a": "∧ (AND) corrisponde a ∩ (intersezione), ∨ (OR) corrisponde a ∪ (unione)."}, {"id": 8, "sec": "Algebra booleana e porte logiche", "q": "Chi è George Boole e che cosa creò?", "a": "Un matematico dell'Ottocento che creò una logica matematica con variabili, operatori e funzioni logiche."}, {"id": 9, "sec": "Algebra booleana e porte logiche", "q": "Che valori possono assumere le variabili booleane?", "a": "Solo 1 (Vero) e 0 (Falso)."}, {"id": 10, "sec": "Algebra booleana e porte logiche", "q": "A quale operatore booleano corrispondono E, O, O esclusivo, NON?", "a": "E = AND (prodotto, ·), O = OR (somma, +), O esclusivo = XOR (⊕), NON = NOT (negazione, Ā)."}, {"id": 11, "sec": "Algebra booleana e porte logiche", "q": "Quali sono le regole di precedenza tra gli operatori?", "a": "NOT prima di AND e OR. AND prima di OR e XOR. Le parentesi forzano l'ordine."}, {"id": 12, "sec": "Algebra booleana e porte logiche", "q": "Quanto vale la tabella di una porta AND?", "a": "Uscita 1 solo con ingressi 1 e 1. Righe (A B): 00 dà 0, 01 dà 0, 10 dà 0, 11 dà 1."}, {"id": 13, "sec": "Algebra booleana e porte logiche", "q": "Quanto vale la tabella di una porta OR?", "a": "Uscita 0 solo con ingressi 0 e 0. Righe: 00 dà 0, 01 dà 1, 10 dà 1, 11 dà 1."}, {"id": 14, "sec": "Algebra booleana e porte logiche", "q": "Quanto vale la tabella di una porta XOR?", "a": "Uscita 1 quando gli ingressi sono diversi. Righe: 00 dà 0, 01 dà 1, 10 dà 1, 11 dà 0."}, {"id": 15, "sec": "Algebra booleana e porte logiche", "q": "Che cosa succede se si mettono due NOT in serie?", "a": "Si ottiene il valore di partenza: due negazioni affermano."}, {"id": 16, "sec": "Algebra booleana e porte logiche", "q": "Che cosa sono NAND, NOR e XNOR?", "a": "Le porte AND, OR, XOR seguite da un NOT. Nel simbolo il NOT si disegna come un pallino vuoto all'uscita."}, {"id": 17, "sec": "Algebra booleana e porte logiche", "q": "Tabelle di NAND, NOR e XNOR per le righe 00, 01, 10, 11?", "a": "NAND: 1, 1, 1, 0. NOR: 1, 0, 0, 0. XNOR: 1, 0, 0, 1."}, {"id": 18, "sec": "Funzioni, circuiti, tabelle di verità", "q": "In quali tre modi si può rappresentare una funzione logica?", "a": "Con un'equazione logica, una tabella di verità o un circuito logico."}, {"id": 19, "sec": "Funzioni, circuiti, tabelle di verità", "q": "Che differenza c'è tra forma letterale e forma algebrica?", "a": "La letterale usa le parole (AND, OR, NOT), l'algebrica usa i simboli. Esempio: (A AND B) OR NOT C equivale a A·B + C̄."}, {"id": 20, "sec": "Funzioni, circuiti, tabelle di verità", "q": "Quante righe ha la tabella di verità di una funzione con n variabili?", "a": "2 elevato a n. Con 3 variabili sono 8 righe."}, {"id": 21, "sec": "Funzioni, circuiti, tabelle di verità", "q": "Che cos'è una rete logica? E un chip?", "a": "Una rete logica è un insieme di porte collegate che realizza fisicamente una funzione booleana. Un chip è una rete logica racchiusa in una \"scatola\", con ingressi e uscite esposti."}, {"id": 22, "sec": "Funzioni, circuiti, tabelle di verità", "q": "Che cos'è un circuito integrato? E il pinout?", "a": "Un circuito elettronico miniaturizzato con milioni di transistor. Il pinout è lo schema dei piedini del chip (esempio: chip 7408)."}, {"id": 23, "sec": "Funzioni, circuiti, tabelle di verità", "q": "Calcola m = (1 AND 0) OR (1 AND 1).", "a": "(0) OR (1) = 1."}, {"id": 24, "sec": "Funzioni, circuiti, tabelle di verità", "q": "Calcola m = (1 OR 0) XOR (NOT(0) AND 1).", "a": "1 XOR (1 AND 1) = 1 XOR 1 = 0."}, {"id": 25, "sec": "Funzioni, circuiti, tabelle di verità", "q": "Calcola m = NOT((0 OR 1) AND (1 XOR 0)).", "a": "NOT(1 AND 1) = NOT(1) = 0. Si può scrivere anche (0 OR 1) NAND (1 XOR 0)."}, {"id": 26, "sec": "Funzioni, circuiti, tabelle di verità", "q": "Per quale riga F = NOT(A OR B) AND C vale 1?", "a": "Solo per A=0, B=0, C=1."}, {"id": 27, "sec": "Teoremi e semplificazione", "q": "Enuncia il teorema dei complementi.", "a": "A · Ā = 0 e A + Ā = 1."}, {"id": 28, "sec": "Teoremi e semplificazione", "q": "Enuncia il teorema di idempotenza.", "a": "A · A = A e A + A = A."}, {"id": 29, "sec": "Teoremi e semplificazione", "q": "Enuncia il teorema di annullamento e quello di identità.", "a": "Annullamento: A · 0 = 0 e A + 1 = 1. Identità: A · 1 = A e A + 0 = A."}, {"id": 30, "sec": "Teoremi e semplificazione", "q": "Enuncia il 1° teorema dell'assorbimento.", "a": "A · (A + B) = A e A + (A · B) = A."}, {"id": 31, "sec": "Teoremi e semplificazione", "q": "Enuncia il 2° teorema dell'assorbimento.", "a": "A · (Ā + B) = A · B e A + (Ā · B) = A + B."}, {"id": 32, "sec": "Teoremi e semplificazione", "q": "Enuncia i teoremi di De Morgan.", "a": "NOT(A · B) = Ā + B̄ e NOT(A + B) = Ā · B̄. Negare un AND dà un OR dei negati, negare un OR dà un AND dei negati."}, {"id": 33, "sec": "Teoremi e semplificazione", "q": "Scrivi la proprietà distributiva dell'algebra booleana (le due forme).", "a": "A · B + A · C = A · (B + C) e (A + B) · (A + C) = A + (B · C). La seconda NON esiste nell'algebra normale."}, {"id": 34, "sec": "Teoremi e semplificazione", "q": "Che cosa afferma il principio di dualità?", "a": "Data un'uguaglianza, se ne ottiene un'altra scambiando AND con OR e 1 con 0 (e viceversa)."}, {"id": 35, "sec": "Teoremi e semplificazione", "q": "Semplifica F = Ā·B̄·C + Ā·B·C + A·B̄·C + A·B·C.", "a": "Si raccoglie Ā·C e A·C, poi (B̄ + B) = 1, quindi F = C·(Ā + A) = <strong>C<\/strong>."}, {"id": 36, "sec": "Teoremi e semplificazione", "q": "Semplifica F = Ā·B·C̄ + A·B̄·C̄ + A·B·C̄.", "a": "<strong>F = C̄·(A + B)<\/strong>. Si raccoglie C̄ e si usa il 2° assorbimento."}, {"id": 37, "sec": "Teoremi e semplificazione", "q": "A che cosa serve l'idempotenza nelle semplificazioni?", "a": "A duplicare un termine (X + X = X) per poterlo raccogliere due volte in modi diversi."}, {"id": 38, "sec": "Teoremi e semplificazione", "q": "Semplifica (A + B)·(A + B̄).", "a": "<strong>A<\/strong>."}, {"id": 39, "sec": "Mappe di Karnaugh", "q": "A che cosa servono le mappe di Karnaugh?", "a": "A semplificare le espressioni booleane in modo grafico e ottimizzare i circuiti logici."}, {"id": 40, "sec": "Mappe di Karnaugh", "q": "In quale ordine si scrivono righe e colonne di una mappa di Karnaugh?", "a": "00, 01, 11, 10 (codice Gray), così due celle adiacenti differiscono per una sola variabile."}, {"id": 41, "sec": "Mappe di Karnaugh", "q": "Quali sono le regole per raggruppare gli 1?", "a": "Gruppi di potenze di 2 (1, 2, 4, 8), i più grandi possibile, anche sovrapposti. I bordi opposti della mappa sono adiacenti."}, {"id": 42, "sec": "Mappe di Karnaugh", "q": "Come si legge un gruppo di una mappa?", "a": "Si tengono solo le variabili che non cambiano all'interno del gruppo, poi i gruppi si sommano con OR."}, {"id": 43, "sec": "Mappe di Karnaugh", "q": "Termini 000, 010, 100, 101, 110, 111. Qual è la funzione semplificata?", "a": "<strong>Y = A + C̄<\/strong> (un gruppo da 4 con C=0 e un gruppo da 4 con A=1)."}, {"id": 44, "sec": "Mappe di Karnaugh", "q": "Termini 110, 111, 011, 001. Qual è la funzione semplificata?", "a": "<strong>Y = AB + ĀC<\/strong>."}, {"id": 45, "sec": "Errori da evitare", "q": "Come si sbaglia di solito con De Morgan?", "a": "Scrivendo NOT(A · B) = Ā · B̄. Corretto: NOT(A · B) = Ā + B̄."}, {"id": 46, "sec": "Errori da evitare", "q": "Come si legge A + B·C?", "a": "Come A + (B·C), perché l'AND ha precedenza sull'OR."}]</script>
+<script>
+(function(){
+  "use strict";
+  var $=function(id){return document.getElementById(id)};
+  var store={get:function(k){try{return localStorage.getItem(k)}catch(e){return null}},set:function(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+
+  /* Tema */
+  var root=document.documentElement;
+  var savedTheme=store.get("ab-theme");
+  if(savedTheme==="light"||savedTheme==="dark"){root.setAttribute("data-theme",savedTheme)}
+  $("theme").addEventListener("click",function(){
+    var cur=root.getAttribute("data-theme");
+    if(!cur){cur=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}
+    var next=cur==="dark"?"light":"dark";
+    root.setAttribute("data-theme",next);store.set("ab-theme",next);
+  });
+
+  /* Tab */
+  var tabs={sum:$("tab-sum"),flash:$("tab-flash")},panels={sum:$("panel-sum"),flash:$("panel-flash")};
+  function showTab(name,push){
+    Object.keys(tabs).forEach(function(k){
+      var on=k===name;
+      tabs[k].setAttribute("aria-selected",on?"true":"false");
+      panels[k].hidden=!on;
+    });
+    if(push){history.replaceState(null,"",name==="flash"?"#flashcard":"#riassunto")}
+    window.scrollTo({top:0});
+  }
+  tabs.sum.addEventListener("click",function(){showTab("sum",true)});
+  tabs.flash.addEventListener("click",function(){showTab("flash",true)});
+  if(location.hash==="#flashcard"){showTab("flash",false)}
+
+  /* Indice: evidenzia la sezione corrente */
+  var links=[].slice.call(document.querySelectorAll(".toc a"));
+  var heads=links.map(function(a){return document.getElementById(a.getAttribute("href").slice(1))}).filter(Boolean);
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          links.forEach(function(a){a.classList.toggle("active",a.getAttribute("href")==="#"+en.target.id)});
+        }
+      });
+    },{rootMargin:"-90px 0px -70% 0px"});
+    heads.forEach(function(h){io.observe(h)});
+  }
+  [].forEach.call(document.querySelectorAll(".toc-mobile a"),function(a){
+    a.addEventListener("click",function(){document.querySelector(".toc-mobile").open=false});
+  });
+
+  /* Flashcard */
+  var deck=JSON.parse($("deck").textContent);
+  var known={};
+  try{known=JSON.parse(store.get("ab-known")||"{}")||{}}catch(e){known={}}
+  var secs=[];deck.forEach(function(c){if(secs.indexOf(c.sec)<0)secs.push(c.sec)});
+  var sel=$("sec");
+  sel.appendChild(new Option("Tutti gli argomenti ("+deck.length+")","__all"));
+  secs.forEach(function(s){
+    var n=deck.filter(function(c){return c.sec===s}).length;
+    sel.appendChild(new Option(s+" ("+n+")",s));
+  });
+  var state={list:[],i:0,shuffle:false,review:false,flipped:false};
+  var card=$("card"),stage=$("stage");
+
+  function save(){store.set("ab-known",JSON.stringify(known))}
+  function build(){
+    var s=sel.value;
+    var l=deck.filter(function(c){
+      if(s!=="__all"&&c.sec!==s)return false;
+      if(state.review&&known[c.id]===true)return false;
+      return true;
+    });
+    if(state.shuffle){
+      for(var j=l.length-1;j>0;j--){var k=Math.floor(Math.random()*(j+1));var t=l[j];l[j]=l[k];l[k]=t}
+    }
+    state.list=l;state.i=0;render(true);
+  }
+  function stats(){
+    var total=deck.length,ok=0;
+    deck.forEach(function(c){if(known[c.id]===true)ok++});
+    var pct=total?Math.round(ok*100/total):0;
+    $("barfill").style.width=pct+"%";
+    $("bar").setAttribute("aria-valuenow",String(pct));
+    $("known").textContent="Sapute: "+ok+" su "+total;
+  }
+  function render(instant){
+    var l=state.list,has=l.length>0;
+    $("empty").hidden=has;stage.hidden=!has;
+    document.querySelector(".actions").hidden=!has;
+    if(!has){$("pos").textContent="";stats();return}
+    var c=l[state.i];
+    if(instant){stage.classList.add("no-anim")}
+    state.flipped=false;card.classList.remove("flipped");
+    card.querySelector(".back").setAttribute("aria-hidden","true");
+    $("ftag").textContent=c.sec;
+    $("q").innerHTML=c.q;$("a").innerHTML=c.a;
+    $("pos").textContent="Carta "+(state.i+1)+" di "+l.length;
+    stats();
+    if(instant){requestAnimationFrame(function(){requestAnimationFrame(function(){stage.classList.remove("no-anim")})})}
+  }
+  function flip(){
+    if(!state.list.length)return;
+    state.flipped=!state.flipped;
+    card.classList.toggle("flipped",state.flipped);
+    card.querySelector(".back").setAttribute("aria-hidden",state.flipped?"false":"true");
+    card.querySelector(".front").setAttribute("aria-hidden",state.flipped?"true":"false");
+  }
+  function go(d){
+    var n=state.list.length;if(!n)return;
+    state.i=(state.i+d+n)%n;render(true);
+  }
+  function mark(v){
+    if(!state.list.length)return;
+    var c=state.list[state.i];
+    known[c.id]=v;save();
+    if(state.review&&v===true){
+      state.list.splice(state.i,1);
+      if(state.i>=state.list.length)state.i=0;
+      render(true);
+    }else{go(1)}
+  }
+  card.addEventListener("click",flip);
+  $("next").addEventListener("click",function(){go(1)});
+  $("prev").addEventListener("click",function(){go(-1)});
+  $("got").addEventListener("click",function(){mark(true)});
+  $("again").addEventListener("click",function(){mark(false)});
+  sel.addEventListener("change",build);
+  $("shuffle").addEventListener("click",function(){
+    state.shuffle=!state.shuffle;this.setAttribute("aria-pressed",String(state.shuffle));build();
+  });
+  $("onlyreview").addEventListener("click",function(){
+    state.review=!state.review;this.setAttribute("aria-pressed",String(state.review));build();
+  });
+  $("reset").addEventListener("click",function(){
+    if(window.confirm("Vuoi azzerare tutti i progressi delle flashcard?")){known={};save();build()}
+  });
+  document.addEventListener("keydown",function(e){
+    if(panels.flash.hidden)return;
+    var tag=(e.target&&e.target.tagName)||"";
+    if(tag==="SELECT"||e.ctrlKey||e.metaKey||e.altKey)return;
+    if(e.key==="ArrowRight"){go(1);e.preventDefault()}
+    else if(e.key==="ArrowLeft"){go(-1);e.preventDefault()}
+    else if((e.key===" "||e.key==="Enter")&&e.target===card){flip();e.preventDefault()}
+    else if(e.key===" "&&tag!=="BUTTON"){flip();e.preventDefault()}
+    else if(e.key==="s"||e.key==="S"){mark(true)}
+    else if(e.key==="r"||e.key==="R"){mark(false)}
+  });
+  build();
+})();
+</script>
+</body>
+</html>
